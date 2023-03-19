@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+
+
+    &__title {
+
+        @media(max-width:900px) {
+            text-align: center;
+
+        }
+    }
+
+
+    &__doc {
+        border: solid 1px gray;
+        margin: 50px auto;
+        padding: 55px;
+
+
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+}
+
+input {
+    border: none;
+    border-bottom: solid 1px gray !important;
+    ;
+}
