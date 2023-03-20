@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
-
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase/config";
 export const doctContext = createContext();
 export const dispatchDocContext = createContext();
 
@@ -12,8 +13,20 @@ const date = new Date().toLocaleString("es-ES", {
 const Context = ({ children }) => {
   const [doc, setDoc] = useState({ date: date });
 
+  const createDoc = () => {
+    addDoc(collection(db, "student"), {
+      adultName: doc.adultName,
+      adultId: doc.adultId,
+      student: doc.student,
+      grade: doc.grade,
+      firm: doc.firm,
+    })
+      .then(() => setDoc({ date: date }))
+      .catch((err) => console.error(err));
+  };
+
   const state = { doc };
-  const dispatch = { setDoc };
+  const dispatch = { setDoc, createDoc };
   return (
     <doctContext.Provider value={state}>
       <dispatchDocContext.Provider value={dispatch}>

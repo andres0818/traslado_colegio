@@ -1,4 +1,11 @@
-import { Document, Page, PDFViewer, Text, View } from "@react-pdf/renderer";
+import {
+  Document,
+  Image,
+  Page,
+  PDFViewer,
+  Text,
+  View,
+} from "@react-pdf/renderer";
 import React, { useContext } from "react";
 import { doctContext } from "./context/Context";
 
@@ -39,7 +46,9 @@ const DocPdf = () => {
               </View>
               <View>
                 <Text>Cordialmente,</Text>
-                <input type="text" />
+                {doc?.firm && (
+                  <Image src={doc?.firm} style={{ width: "200px" }} />
+                )}
                 <Text>cc: {` ${doc?.adultId && doc.adultId} `}</Text>
               </View>
             </View>

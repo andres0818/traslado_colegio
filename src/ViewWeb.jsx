@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { dispatchDocContext, doctContext } from "./context/Context";
+import Firm from "./Firm/Firm";
 import "./sass/ViewDoc.scss";
 
 const ViewWeb = () => {
-  const { setDoc } = useContext(dispatchDocContext);
+  const { setDoc, createDoc } = useContext(dispatchDocContext);
   const { doc } = useContext(doctContext);
   const handlerChange = (e) => {
     setDoc({
@@ -63,11 +64,13 @@ const ViewWeb = () => {
           </div>
           <div>
             <p>Cordialmente,</p>
-            <input required type="text" name="firma" />
+            <Firm />
             <p>cc: {doc?.adultId && doc.adultId}</p>
           </div>
         </div>
-        <Button style={{ marginBottom: "50px" }}>Guardar documento</Button>
+        <Button onClick={createDoc} style={{ marginBottom: "50px" }}>
+          Guardar documento
+        </Button>
       </form>
     </div>
   );
