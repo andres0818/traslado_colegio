@@ -14,10 +14,15 @@ const ViewWeb = () => {
     });
   };
 
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    createDoc();
+  };
+
   return (
     <div className="container">
       <h1 className="container__title">Autorización de traslado al colegio</h1>
-      <form className="container">
+      <form onSubmit={handlerSubmit} className="container">
         <div className="container__doc">
           <div className="container__info">
             <p>{`Medellín,${doc.date} `}</p>
@@ -68,7 +73,11 @@ const ViewWeb = () => {
             <p>cc: {doc?.adultId && doc.adultId}</p>
           </div>
         </div>
-        <Button onClick={createDoc} style={{ marginBottom: "50px" }}>
+        <Button
+          type="submit"
+          onSubmit={() => console.log("Submit")}
+          style={{ marginBottom: "50px" }}
+        >
           Guardar documento
         </Button>
       </form>

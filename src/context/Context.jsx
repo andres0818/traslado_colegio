@@ -14,16 +14,25 @@ const Context = ({ children }) => {
   const [doc, setDoc] = useState({ date: date });
 
   const createDoc = () => {
-    addDoc(collection(db, "student"), {
-      adultName: doc.adultName,
-      adultId: doc.adultId,
-      student: doc.student,
-      grade: doc.grade,
-      firm: doc.firm,
-    })
-      .then(() => setDoc({ date: date }))
-      .catch((err) => console.error(err));
+    if (doc.firm)
+      return addDoc(collection(db, "student"), {
+        adultName: doc?.adultName,
+        adultId: doc?.adultId,
+        student: doc?.student,
+        grade: doc?.grade,
+        firm: doc?.firm,
+      })
+        .then(() => {
+          setDoc();
+          setDoc({ date: date });
+          alert("Documento guardado exitosamente");
+        })
+        .catch((err) => alert(err));
+    else return alert("Por favor firme el documento");
   };
+
+
+  
 
   const state = { doc };
   const dispatch = { setDoc, createDoc };
