@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <Navbar />
       <ViewWeb />
-      <DocPdf/>
+      <DocPdf />
     </div>
   );
 }
