@@ -1,0 +1,19 @@
+.listStudents {
+    &__info {
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+.table {
+    margin: 0;
+
+    &__container {
+        cursor: pointer;
+
+        :hover {
+            color: white;
+            background-color: rgba(0, 128, 0, 0.519);
+        }
+    }
+}

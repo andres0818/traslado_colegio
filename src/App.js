@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import CreateDoc from "./CreateDoc";
-import DocPdf from "./DocPdf";
+import ListStudents from "./ListStudents";
 import Navbar from "./Navbar";
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navbar />}>
           <Route path="/" element={<CreateDoc />} />
-          <Route path="/listado" element={<DocPdf />} />
+          <Route path="/listado" element={<ListStudents />} />
           <Route path="*" element={<CreateDoc />} />
         </Route>
       </Routes>

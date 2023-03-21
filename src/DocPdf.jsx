@@ -6,14 +6,11 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import React, { useContext } from "react";
-import { doctContext } from "./context/Context";
+import React from "react";
 
-const DocPdf = () => {
-  const { doc } = useContext(doctContext);
-
+const DocPdf = ({ doc }) => {
   return (
-    <PDFViewer style={{ width: "100%", height: "100vh" }}>
+    <PDFViewer style={{ width: "100%", height: "100vh", }}>
       <Document>
         <Page size="A4">
           <View

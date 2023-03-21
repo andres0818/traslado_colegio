@@ -1,6 +1,7 @@
-import React, { createContext, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import React, { createContext, useEffect, useState } from "react";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/config";
+
 export const doctContext = createContext();
 export const dispatchDocContext = createContext();
 
@@ -12,11 +13,13 @@ const date = new Date().toLocaleString("es-ES", {
 
 const Context = ({ children }) => {
   const [doc, setDoc] = useState({ date: date });
+  const [dataUser, setDataUser] = useState("");
 
   const createDoc = () => {
     if (doc.firm)
-      return addDoc(collection(db, "student"), {
+      return addDoc(collection(db, "students"), {
         adultName: doc?.adultName,
+        date: doc?.date,
         adultId: doc?.adultId,
         student: doc?.student,
         grade: doc?.grade,
@@ -31,10 +34,21 @@ const Context = ({ children }) => {
     else return alert("Por favor firme el documento");
   };
 
+  const getDocuments = () => {
+    onSnapshot(collection(db, "students"), (snapshot) => {
+      setDataUser(
+        snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        })
+      );
+    });
+  };
 
-  
+  useEffect(() => {
+    getDocuments();
+  }, []);
 
-  const state = { doc };
+  const state = { doc, dataUser };
   const dispatch = { setDoc, createDoc };
   return (
     <doctContext.Provider value={state}>
