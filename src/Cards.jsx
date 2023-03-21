@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import DocPdf from "./DocPdf";
 
 const Cards = ({ doc, index }) => {
-  const [modal, setModal] = useState(false);
+  const [pdf, setPdf] = useState(false);
 
-  const handlerModal = (state) => {
-    const isModal = state ? false : true;
-    setModal(isModal);
+  const handlerPdf = (state) => {
+    const isPdf = state ? false : true;
+    setPdf(isPdf);
   };
 
   return (
-    <div onClick={() => handlerModal(modal)}>
+    <div onClick={() => handlerPdf(pdf)}>
       <table className="table ">
         <thead>
           <thead></thead>
@@ -24,7 +24,7 @@ const Cards = ({ doc, index }) => {
         </thead>
       </table>
 
-      {modal && (
+      {pdf && (
         <div className="modals">
           <div className="modals__container">
             <DocPdf doc={doc} />
