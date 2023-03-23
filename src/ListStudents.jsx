@@ -13,7 +13,9 @@ const ListStudents = () => {
       </div>
       <div className="table__container">
         {dataUser &&
-          dataUser.map((doc, index) => <Cards doc={doc} index={index} />)}
+          dataUser.map((doc, index) => (
+            <Cards key={index} doc={doc} index={index} />
+          ))}
       </div>
     </>
   );
