@@ -20,7 +20,7 @@ const styles = {
     textAlign: "justify",
   },
   infoText: {
-    gap: "35px",
+    gap: "40px",
   },
 
   img: {
@@ -50,7 +50,7 @@ const DocPdf = ({ doc }) => {
                 MILITAR COLMILGPNO identificado con Nit. 811.015.863 para abono
                 a la pensión.
               </Text>
-              <Text style={{ marginTop: "22px" }}>Cordialmente,</Text>
+              <Text style={{ margin: "32px 0 " }}>Cordialmente,</Text>
             </View>
             <View style={{}}>
               {doc?.firm && <Image src={doc?.firm} style={styles.img} />}
