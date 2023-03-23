@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase/config";
+import { auth, db } from "../firebase/config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const doctContext = createContext();
 export const dispatchDocContext = createContext();
@@ -14,6 +15,15 @@ const date = new Date().toLocaleString("es-ES", {
 const Context = ({ children }) => {
   const [doc, setDoc] = useState({ date: date });
   const [dataUser, setDataUser] = useState("");
+
+  const login = (user) => {
+    console.log(user);
+    signInWithEmailAndPassword(auth, user.email, user.contrasena)
+      .then(() => {
+        console.log("User logged ");
+      })
+      .catch((err) => console.log(err));
+  };
 
   const createDoc = () => {
     if (doc.firm)
@@ -49,7 +59,7 @@ const Context = ({ children }) => {
   }, []);
 
   const state = { doc, dataUser };
-  const dispatch = { setDoc, createDoc };
+  const dispatch = { setDoc, createDoc, login };
   return (
     <doctContext.Provider value={state}>
       <dispatchDocContext.Provider value={dispatch}>
