@@ -13,10 +13,9 @@ const Cards = ({ doc, index }) => {
     <div onClick={() => handlerPdf(pdf)}>
       <table className="table ">
         <thead>
-          <thead></thead>
           <tr>
             <th scope="row">{index + 1}</th>
-            <td colspan="2" class="table-active w-50">
+            <td colSpan="2" className="table-active w-50">
               {doc.student}
             </td>
             <td>{doc.date}</td>
