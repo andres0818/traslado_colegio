@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import Swal from "sweetalert2";
 
 export const doctContext = createContext();
 export const dispatchDocContext = createContext();
@@ -16,28 +17,56 @@ const date = new Date().toLocaleString("es-ES", {
   year: "numeric",
 });
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 const Context = ({ children }) => {
   const [doc, setDoc] = useState({ date: date });
   const [dataUser, setDataUser] = useState("");
 
   const [isLogin, setIsLogin] = useState(false);
 
-  const logOut = () => signOut(auth);
+  const logOut = () =>
+    signOut(auth).then(() =>
+      Toast.fire({
+        icon: "error",
+        title: "Sesión cerrada",
+      })
+    );
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  });
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
+    });
+  }, []);
 
   const login = (user) => {
     signInWithEmailAndPassword(auth, user.email, user.contrasena)
       .then(() => {
-        console.log("User logged ");
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully",
+        });
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        Toast.fire({
+          icon: "error",
+          title: err.message,
+        })
+      );
   };
 
   const createDoc = () => {
@@ -53,10 +82,22 @@ const Context = ({ children }) => {
         .then(() => {
           setDoc();
           setDoc({ date: date });
-          alert("Documento guardado exitosamente");
+          Toast.fire({
+            icon: "success",
+            title: "Documento Creado",
+          });
         })
-        .catch((err) => alert(err));
-    else return alert("Por favor firme el documento");
+        .catch((err) =>
+          Toast.fire({
+            icon: "error",
+            title: err.message,
+          })
+        );
+    else
+      return Swal.fire({
+        icon: "error",
+        title: "Por favor firme el documento",
+      });
   };
 
   const getDocuments = () => {
@@ -74,7 +115,7 @@ const Context = ({ children }) => {
   }, []);
 
   const state = { doc, dataUser, isLogin };
-  const dispatch = { setDoc, createDoc, login, logOut };
+  const dispatch = { setDoc, createDoc, login, logOut, Toast };
   return (
     <doctContext.Provider value={state}>
       <dispatchDocContext.Provider value={dispatch}>

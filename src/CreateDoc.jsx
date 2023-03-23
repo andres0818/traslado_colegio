@@ -27,7 +27,7 @@ const CreateDoc = () => {
           <div className="container__info">
             <p>{`Medellín,${doc.date} `}</p>
             <p>Señores:</p>
-            <h4>FUNDACION BIBE</h4>
+            <h4>FUNDACIÓN BIBE</h4>
             <p>Ref. Cruce de saldo</p>
             <p>
               Yo

@@ -37,7 +37,7 @@ const DocPdf = ({ doc }) => {
             <View style={styles.infoText}>
               <Text>{`Medellín,${doc.date} `}</Text>
               <Text>Señores:</Text>
-              <Text>FUNDACION BIBE</Text>
+              <Text>FUNDACIÓN BIBE</Text>
               <Text>Ref. Cruce de saldo</Text>
               <Text>
                 Yo {` ${doc?.adultName && doc.adultName} `} identificado(a) con
