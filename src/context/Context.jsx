@@ -1,7 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 
 export const doctContext = createContext();
 export const dispatchDocContext = createContext();
@@ -16,8 +20,19 @@ const Context = ({ children }) => {
   const [doc, setDoc] = useState({ date: date });
   const [dataUser, setDataUser] = useState("");
 
+  const [isLogin, setIsLogin] = useState(false);
+
+  const logOut = () => signOut(auth);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  });
+
   const login = (user) => {
-    console.log(user);
     signInWithEmailAndPassword(auth, user.email, user.contrasena)
       .then(() => {
         console.log("User logged ");
@@ -58,8 +73,8 @@ const Context = ({ children }) => {
     getDocuments();
   }, []);
 
-  const state = { doc, dataUser };
-  const dispatch = { setDoc, createDoc, login };
+  const state = { doc, dataUser, isLogin };
+  const dispatch = { setDoc, createDoc, login, logOut };
   return (
     <doctContext.Provider value={state}>
       <dispatchDocContext.Provider value={dispatch}>
